@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Shift Swap Request</title>
+<style id="appstyle">
+  :root{
+    --bg:#f3f5f8; --card:#ffffff; --ink:#1c2430; --muted:#667085; --line:#dfe4ec;
+    --accent:#0b5cad; --accent-ink:#ffffff; --danger:#b42318; --soft:#eef4fb;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;line-height:1.45}
+  .wrap{max-width:720px;margin:0 auto;padding:16px 14px 120px}
+  h1{font-size:22px;margin:6px 0 2px}
+  .sub{color:var(--muted);font-size:14px;margin:0 0 16px}
+  h2{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:26px 0 10px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:12px}
+  details.card summary{cursor:pointer;font-weight:600;list-style:none;display:flex;justify-content:space-between;align-items:center}
+  details.card summary::-webkit-details-marker{display:none}
+  details.card summary::after{content:"+";font-size:20px;color:var(--muted)}
+  details[open].card summary::after{content:"–"}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+  .chip{display:inline-flex;align-items:center;gap:6px;background:var(--soft);border:1px solid var(--line);
+    border-radius:999px;padding:5px 6px 5px 12px;font-size:14px}
+  .chip button{border:0;background:#d5dde9;color:#33415c;width:22px;height:22px;border-radius:50%;
+    font-size:14px;line-height:1;cursor:pointer;padding:0}
+  .addrow{display:flex;gap:8px}
+  input[type=text],input[type=date],select,textarea{
+    font:inherit;font-size:16px;color:var(--ink);background:#fff;border:1px solid #c5cedb;border-radius:10px;
+    padding:9px 10px;width:100%;min-width:0}
+  textarea{min-height:70px;resize:vertical}
+  input:focus,select:focus,textarea:focus,button:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+  label{display:block;font-size:12px;font-weight:600;color:var(--muted);margin-bottom:4px}
+  .btn{font:inherit;font-size:15px;font-weight:600;border-radius:10px;padding:10px 14px;cursor:pointer;
+    border:1px solid var(--accent);background:var(--accent);color:var(--accent-ink);white-space:nowrap}
+  .btn.ghost{background:#fff;color:var(--accent)}
+  .btn.small{padding:7px 11px;font-size:14px}
+  .btn.danger{border-color:#f0c4bf;background:#fff;color:var(--danger)}
+  .swaphead{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+  .swaphead strong{font-size:16px}
+  .pair{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .group{margin-top:14px;padding-top:12px;border-top:1px dashed var(--line)}
+  .group .gtitle{font-weight:600;font-size:14px;margin-bottom:8px}
+  .day{display:grid;grid-template-columns:1fr 96px 38px;gap:8px;margin-bottom:8px;align-items:center}
+  .x{border:1px solid #f0c4bf;background:#fff;color:var(--danger);border-radius:10px;height:40px;font-size:18px;cursor:pointer}
+  .empty{color:var(--muted);font-size:14px;margin:0 0 8px}
+  .bar{position:fixed;left:0;right:0;bottom:0;background:rgba(255,255,255,.96);border-top:1px solid var(--line);
+    padding:10px 14px calc(10px + env(safe-area-inset-bottom));backdrop-filter:blur(6px)}
+  .bar .in{max-width:720px;margin:0 auto;display:flex;gap:8px;flex-wrap:wrap}
+  .bar .btn{flex:1 1 auto}
+  #toast{position:fixed;left:50%;bottom:90px;transform:translateX(-50%);background:#1c2430;color:#fff;
+    padding:9px 16px;border-radius:999px;font-size:14px;opacity:0;pointer-events:none;transition:opacity .2s}
+  #toast.on{opacity:1}
+  .previewbox{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px;overflow-x:auto}
+  @media print{
+    body{background:#fff}
+    .noprint,.bar{display:none!important}
+    .wrap{padding:0;max-width:none}
+    .previewbox{border:0;padding:0}
+  }
+</style>
+</head>
+<body>
+
+<noscript><div style="margin:16px;padding:14px 16px;border-radius:12px;background:#fff4e5;border:1px solid #f5c27a;color:#7a4a00;font:16px/1.45 -apple-system,Segoe UI,Roboto,Arial,sans-serif">
+<b>This preview can't run the form.</b><br>Open this file in a web browser (Chrome, Safari, Edge) or on a computer to use it.</div></noscript>
+<div class="wrap">
+  <div class="noprint">
+    <h1>Shift Swap Request</h1>
+    <p class="sub">Build the swap, then download a read-only page to attach to your email.</p>
+
+    
+
+    <h2>Email details</h2>
+    <div class="card">
+      <div class="pair">
+        <div><label for="manager">Manager name</label>
+          <select id="manager" onchange="state.manager=this.value;save();renderPreview()"><option value="">Select manager</option><option selected="">Team Manager</option><option>Adam Carter</option><option>Bilal Hassan</option><option>Chloe Martin</option><option>Daniel Reyes</option><option>Elena Petrova</option><option>Farid Nasser</option><option>Grace Liu</option><option>Hana Yousef</option><option>Ivan Novak</option><option>Julia Brooks</option><option>Karim Saleh</option><option>Laila Mansour</option></select></div>
+        <div><label for="sender">Your name</label>
+          <select id="sender" onchange="state.sender=this.value;save();renderPreview()"><option value="">Select your name</option><option>Team Manager</option><option>Adam Carter</option><option>Bilal Hassan</option><option>Chloe Martin</option><option>Daniel Reyes</option><option>Elena Petrova</option><option>Farid Nasser</option><option>Grace Liu</option><option>Hana Yousef</option><option>Ivan Novak</option><option>Julia Brooks</option><option>Karim Saleh</option><option>Laila Mansour</option></select></div>
+      </div>
+    </div>
+
+    <h2>Swaps</h2>
+    <div id="swaps"></div>
+    <button class="btn ghost" onclick="addSwap()">+ Add another swap</button>
+
+    <h2>Note (optional)</h2>
+    <textarea id="note" placeholder="Anything the approver should know" oninput="state.note=this.value;save();renderPreview()"></textarea>
+
+    <h2>Email subject</h2>
+    <div class="card addrow">
+      <div id="subject" style="flex:1;align-self:center;font-size:15px"></div>
+      <button class="btn ghost small" onclick="copySubject()">Copy</button>
+    </div>
+
+    <h2>Preview — what the recipient sees</h2>
+  </div>
+
+  <div class="previewbox"><div id="preview"></div></div>
+</div>
+
+<div class="bar noprint">
+  <div class="in">
+    <button class="btn" onclick="sendEmail()">Send by email</button>
+    <button class="btn ghost" onclick="downloadHtml()">Download to attach</button>
+    <button class="btn ghost" onclick="copyEmail()">Copy for email body</button>
+    <button class="btn ghost" onclick="downloadPdf()">Download PDF</button>
+    <button class="btn danger" onclick="clearAll()">Clear</button>
+  </div>
+</div>
+<div id="sendBox" class="noprint" style="display:none;position:fixed;inset:0;background:rgba(16,24,40,.45);z-index:20;align-items:flex-end;justify-content:center" onclick="if(event.target===this)closeSend()">
+  <div style="background:#fff;width:100%;max-width:480px;border-radius:16px 16px 0 0;padding:18px 16px calc(18px + env(safe-area-inset-bottom))">
+    <div style="font-weight:700;font-size:17px;margin-bottom:4px">Send with…</div>
+    <p class="empty" style="margin-bottom:12px">Pick the one you normally use for email.</p>
+    <div style="display:grid;gap:8px">
+      <button class="btn" onclick="sendVia('outlook')">Outlook (web / Office 365)</button>
+      <button class="btn ghost" onclick="sendVia('gmail')">Gmail</button>
+      <button class="btn ghost" onclick="sendVia('app')">Email app on this device</button>
+      <button class="btn ghost" onclick="closeSend()">Cancel</button>
+    </div>
+  </div>
+</div>
+<div id="toast" role="status" class=""></div>
+
+
+
+
+
+<script id="app">
+var MODE = 'employee', LOCKED = {"names":["Team Manager","Adam Carter","Bilal Hassan","Chloe Martin","Daniel Reyes","Elena Petrova","Farid Nasser","Grace Liu","Hana Yousef","Ivan Novak","Julia Brooks","Karim Saleh","Laila Mansour","-Casual-","-Sick-","-Annual-"],"shifts":["D1","D2","D3","D4","D5","F","N1","N2","N3"],"manager":"Team Manager","emails":{},"cc":""};
+var KEY = MODE==='admin' ? 'shiftSwapRequest.v1' : 'shiftSwapRequest.staff.v1';
+var DEFAULTS = {
+  names: [
+    'Team Manager', 'Adam Carter', 'Bilal Hassan', 'Chloe Martin',
+    'Daniel Reyes', 'Elena Petrova', 'Farid Nasser', 'Grace Liu',
+    'Hana Yousef', 'Ivan Novak', 'Julia Brooks', 'Karim Saleh',
+    'Laila Mansour', '-Casual-', '-Sick-', '-Annual-'
+  ],
+  shifts: ['D1','D2','D3','D4','D5','F','N1','N2','N3'],
+  note: '',
+  swaps: [ {a:'', b:'', aCovers:[], bCovers:[]} ],
+  emails: {},
+  cc: ''
+};
+var state = load();
+
+function load(){
+  var s = null;
+  try{
+    var raw = localStorage.getItem(KEY);
+    if(raw){ var p = JSON.parse(raw); if(p && p.swaps) s = p; }
+  }catch(e){}
+  if(!s) s = MODE==='admin' ? JSON.parse(JSON.stringify(DEFAULTS))
+                            : {note:'', manager:'', sender:'', swaps:[{a:'',b:'',aCovers:[],bCovers:[]}]};
+  if(LOCKED){
+    s.names = LOCKED.names.slice(); s.shifts = LOCKED.shifts.slice();
+  }
+  if(!s.names) s.names = DEFAULTS.names.slice();
+  if(!s.shifts) s.shifts = DEFAULTS.shifts.slice();
+  sortNames(s.names);
+  if(!s.manager || s.names.indexOf(s.manager)===-1) s.manager = defaultManager(s.names);
+  if(s.sender && s.names.indexOf(s.sender)===-1) s.sender = '';
+  if(!s.ref) s.ref = newRef();
+  if(LOCKED){ s.emails = LOCKED.emails || {}; s.cc = LOCKED.cc || ''; }
+  if(!s.emails) s.emails = JSON.parse(JSON.stringify(DEFAULTS.emails));
+  if(s.cc==null) s.cc = '';
+  return s;
+}
+/* Leave types (written like -Sick-) stay at the end, in the order they were added */
+function isLeave(n){ return /^-.*-$/.test(String(n).trim()); }
+/* Names pinned to the top of the list, in this order */
+function pinnedTop(){ return ['Team Manager']; }
+function isPinned(n){ return pinnedTop().some(function(p){ return p.toLowerCase()===String(n).trim().toLowerCase(); }); }
+function defaultManager(names){
+  var pref = (LOCKED && LOCKED.manager) || 'Team Manager';
+  return names.indexOf(pref)!==-1 ? pref : '';
+}
+function newRef(){
+  var d = new Date(), c = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789', r = '';
+  for(var i=0;i<4;i++) r += c.charAt(Math.floor(Math.random()*c.length));
+  return 'SSR-'+String(d.getFullYear()).slice(2)+String(d.getMonth()+1).padStart(2,'0')+String(d.getDate()).padStart(2,'0')+'-'+r;
+}
+function firstName(n){ return String(n||'').replace(/\(.*?\)/g,'').trim().split(/\s+/)[0] || ''; }
+function sortNames(list){
+  var pinned = pinnedTop().filter(function(p){ return list.some(function(n){ return n.toLowerCase()===p.toLowerCase(); }); })
+                 .map(function(p){ return list.filter(function(n){ return n.toLowerCase()===p.toLowerCase(); })[0]; });
+  var people = list.filter(function(n){ return !isLeave(n) && !isPinned(n); })
+                   .sort(function(x,y){ return x.localeCompare(y, undefined, {sensitivity:'base'}); });
+  var leave = list.filter(isLeave);
+  list.length = 0; Array.prototype.push.apply(list, pinned.concat(people, leave));
+}
+function save(){ try{ localStorage.setItem(KEY, JSON.stringify(state)); }catch(e){} }
+function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g,function(c){
+  return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+function toast(msg){ var t=document.getElementById('toast'); t.textContent=msg; t.classList.add('on');
+  clearTimeout(toast._t); toast._t=setTimeout(function(){t.classList.remove('on');},2200); }
+function fmtDate(iso){
+  if(!iso) return '';
+  var p = iso.split('-'); var d = new Date(+p[0], +p[1]-1, +p[2]);
+  return d.toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'short',year:'numeric'});
+}
+function todayIso(){ var d=new Date(); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
+
+/* ---------- lists (names / shifts) ---------- */
+function renderChips(){
+  [['names','nameChips'],['shifts','shiftChips']].forEach(function(pair){
+    var list = state[pair[0]], box = document.getElementById(pair[1]);
+    if(!box) return;
+    box.innerHTML = list.length ? list.map(function(v,i){
+      return '<span class="chip">'+esc(v)+'<button aria-label="Delete '+esc(v)+'" onclick="removeItem(\''+pair[0]+'\','+i+')">×</button></span>';
+    }).join('') : '<span class="empty">Nothing here yet.</span>';
+  });
+}
+function addItem(kind, inputId){
+  var el = document.getElementById(inputId); var v = el.value.trim();
+  if(!v) return;
+  var exists = state[kind].some(function(x){ return x.toLowerCase()===v.toLowerCase(); });
+  if(exists){ toast('"'+v+'" is already in the list'); return; }
+  state[kind].push(v); if(kind==='names') sortNames(state.names); el.value=''; save(); renderAll();
+}
+function removeItem(kind, i){ state[kind].splice(i,1); save(); renderAll(); }
+document.addEventListener('keydown', function(e){
+  if(e.key==='Enter' && e.target.id==='newName') addItem('names','newName');
+  if(e.key==='Enter' && e.target.id==='newShift') addItem('shifts','newShift');
+});
+
+/* ---------- swaps editor ---------- */
+function options(list, current, placeholder){
+  var all = list.slice();
+  if(current && all.indexOf(current)===-1) all.push(current);
+  return '<option value="">'+placeholder+'</option>' + all.map(function(v){
+    return '<option'+(v===current?' selected':'')+'>'+esc(v)+'</option>'; }).join('');
+}
+function dayRows(si, side){
+  var rows = state.swaps[si][side];
+  if(!rows.length) return '<p class="empty">No days added.</p>';
+  return rows.map(function(r,di){
+    return '<div class="day">'+
+      '<input type="date" aria-label="Date" value="'+esc(r.date)+'" onchange="setDay('+si+',\''+side+'\','+di+',\'date\',this.value)">'+
+      '<select aria-label="Shift" onchange="setDay('+si+',\''+side+'\','+di+',\'shift\',this.value)">'+options(state.shifts, r.shift, 'Shift')+'</select>'+
+      '<button class="x" aria-label="Remove day" onclick="removeDay('+si+',\''+side+'\','+di+')">×</button>'+
+    '</div>';
+  }).join('');
+}
+function renderSwaps(){
+  var box = document.getElementById('swaps');
+  if(!state.swaps.length){ box.innerHTML = '<p class="empty">No swaps yet — add one below.</p>'; return; }
+  box.innerHTML = state.swaps.map(function(s,si){
+    var A = s.a || 'Requester', B = s.b || 'Colleague';
+    return '<div class="card">'+
+      '<div class="swaphead"><strong>Swap '+(si+1)+'</strong>'+
+        '<button class="btn danger small" onclick="removeSwap('+si+')">Delete swap</button></div>'+
+      '<div class="pair">'+
+        '<div><label>Requested by</label><select onchange="setPerson('+si+',\'a\',this.value)">'+options(state.names, s.a, 'Select name')+'</select></div>'+
+        '<div><label>Swap with</label><select onchange="setPerson('+si+',\'b\',this.value)">'+options(state.names, s.b, 'Select name')+'</select></div>'+
+      '</div>'+
+      '<div class="group"><div class="gtitle">'+esc(A)+' covers '+esc(B)+' on</div>'+
+        dayRows(si,'aCovers')+
+        '<button class="btn ghost small" onclick="addDay('+si+',\'aCovers\')">+ Add day</button></div>'+
+      '<div class="group"><div class="gtitle">'+esc(B)+' covers '+esc(A)+' on</div>'+
+        dayRows(si,'bCovers')+
+        '<button class="btn ghost small" onclick="addDay('+si+',\'bCovers\')">+ Add day</button></div>'+
+    '</div>';
+  }).join('');
+}
+function addSwap(){ state.swaps.push({a:(MODE==='admin' ? state.names[0]||'' : ''), b:'', aCovers:[], bCovers:[]}); save(); renderSwaps(); renderPreview(); }
+function removeSwap(i){ state.swaps.splice(i,1); save(); renderSwaps(); renderPreview(); }
+function setPerson(si, key, v){ state.swaps[si][key]=v; save(); renderSwaps(); renderPreview(); }
+function addDay(si, side){
+  var rows = state.swaps[si][side]; var last = rows[rows.length-1];
+  rows.push({date:'', shift: last ? last.shift : ''}); save(); renderSwaps(); renderPreview();
+}
+function removeDay(si, side, di){ state.swaps[si][side].splice(di,1); save(); renderSwaps(); renderPreview(); }
+function setDay(si, side, di, key, v){ state.swaps[si][side][di][key]=v; save(); renderPreview(); }
+
+/* ---------- polite wording, built from the swaps ---------- */
+function joinNames(a){
+  if(a.length<2) return a.join('');
+  return a.slice(0,-1).join(', ')+' and '+a[a.length-1];
+}
+function shortDate(iso){
+  var p = iso.split('-'); var d = new Date(+p[0], +p[1]-1, +p[2]);
+  return d.toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});
+}
+function emailParts(){
+  var sender = (state.sender||'').trim() || (state.swaps[0] && state.swaps[0].a) || '';
+  var mgr = (state.manager||'').trim();
+  var others = [], dates = [];
+  state.swaps.forEach(function(s){
+    [s.a,s.b].forEach(function(n){ if(n && n!==sender && !isLeave(n) && others.indexOf(n)===-1) others.push(n); });
+    s.aCovers.concat(s.bCovers).forEach(function(r){ if(r.date) dates.push(r.date); });
+  });
+  dates.sort();
+  var many = state.swaps.length>1 || dates.length>2;
+  var first = dates[0], last = dates[dates.length-1];
+  var people = [], leave = false;
+  state.swaps.forEach(function(s){
+    [s.a,s.b].forEach(function(n){ if(!n) return; if(isLeave(n)) leave = true; else if(people.indexOf(n)===-1) people.push(n); });
+  });
+  if(sender && people.indexOf(sender)>0){ people.splice(people.indexOf(sender),1); people.unshift(sender); }
+  var subject = (leave ? 'Shift Swap / Leave Approval Request' : 'Shift Swap Approval Request') +
+    (people.length ? ' - '+people.join(' & ') : '') + ' - Ref '+state.ref;
+  return {
+    subject: subject,
+    greeting: 'Dear '+(firstName(mgr) || 'Manager')+',',
+    intro: 'I hope you are well. I would like to kindly request your approval for the shift swap'+(many?'s':'')+
+      ' detailed below'+(others.length ? ', which '+(many?'have':'has')+' been agreed with '+joinNames(others) : '')+
+      '. All shifts will remain fully covered.',
+    closing: 'Thank you for your time and consideration. Please let me know if you need any further details.',
+    signoff: 'Kind regards,',
+    sender: sender
+  };
+}
+function copySubject(){
+  var t = emailParts().subject;
+  function fb(){
+    var ta = document.createElement('textarea'); ta.value = t; document.body.appendChild(ta); ta.select();
+    var ok = false; try{ ok = document.execCommand('copy'); }catch(e){}
+    ta.remove(); toast(ok ? 'Subject copied' : 'Copy failed — select the subject and copy manually');
+  }
+  try{
+    if(navigator.clipboard && navigator.clipboard.writeText)
+      navigator.clipboard.writeText(t).then(function(){ toast('Subject copied'); }, fb);
+    else fb();
+  }catch(e){ fb(); }
+}
+
+/* ---------- read-only preview (inline styles so it survives email) ---------- */
+function badge(shift){
+  if(!shift) return '<span style="color:#98a2b3">—</span>';
+  var bg='#DDF3E4', fg='#1D6B3A';
+  if(/^d/i.test(shift)){ bg='#FFF1CC'; fg='#7A5200'; }
+  else if(/^n/i.test(shift)){ bg='#E0E4FF'; fg='#2B3490'; }
+  return '<span style="display:inline-block;background:'+bg+';color:'+fg+';font-weight:700;font-size:13px;padding:2px 10px;border-radius:999px">'+esc(shift)+'</span>';
+}
+function renderPreview(){
+  var td = 'padding:9px 10px;border-bottom:1px solid #e6eaf0;font-size:14px;text-align:left;vertical-align:middle';
+  var th = 'padding:8px 10px;background:#f3f5f8;border-bottom:1px solid #dfe4ec;font-size:12px;text-align:left;color:#667085;text-transform:uppercase;letter-spacing:.05em';
+  var h = '<div style="font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;max-width:640px;margin:0 auto;color:#1c2430;line-height:1.45">';
+  var GAP = '<div style="height:18px;line-height:18px;font-size:1px">&nbsp;</div>';
+  h += '<div style="border-bottom:3px solid #0b5cad;padding-bottom:10px;margin-bottom:10px">'+
+       '<div style="font-size:20px;font-weight:700">Shift Swap Request</div>'+
+       '<div style="font-size:13px;color:#667085">Prepared '+esc(fmtDate(todayIso()))+' &middot; Ref '+esc(state.ref)+'</div></div>'+GAP;
+  var ep = emailParts();
+  document.getElementById('subject').textContent = ep.subject;
+  h += '<p style="font-size:15px;margin:0 0 10px">'+esc(ep.greeting)+'</p>'+
+       '<p style="font-size:15px;margin:0 0 16px">'+esc(ep.intro)+'</p>'+GAP;
+  var any = false;
+  state.swaps.forEach(function(s){
+    var A = s.a || '—', B = s.b || '—';
+    var rows = [];
+    s.aCovers.forEach(function(r){ if(r.date) rows.push({date:r.date,shift:r.shift,on:A,off:B}); });
+    s.bCovers.forEach(function(r){ if(r.date) rows.push({date:r.date,shift:r.shift,on:B,off:A}); });
+    rows.sort(function(x,y){ return x.date<y.date?-1:x.date>y.date?1:0; });
+    any = true;
+    h += '<div style="border:1px solid #dfe4ec;border-radius:10px;margin-bottom:16px;overflow:hidden">';
+    h += '<div style="padding:10px 12px;font-size:16px;font-weight:700;background:#eef4fb">'+esc(A)+' &#8646; '+esc(B)+'</div>';
+    if(rows.length){
+      h += '<table cellpadding="0" cellspacing="0" style="border-collapse:collapse;width:100%">'+
+           '<tr><th style="'+th+'">Date</th><th style="'+th+'">Shift</th><th style="'+th+'">On duty</th><th style="'+th+'">Covering for</th></tr>';
+      rows.forEach(function(r){
+        h += '<tr><td style="'+td+';white-space:nowrap">'+esc(fmtDate(r.date))+'</td><td style="'+td+'">'+badge(r.shift)+'</td>'+
+             '<td style="'+td+';font-weight:600">'+esc(r.on)+'</td><td style="'+td+'">'+esc(r.off)+'</td></tr>';
+      });
+      h += '</table>';
+    } else {
+      h += '<div style="padding:12px;font-size:14px;color:#667085">No days added yet.</div>';
+    }
+    h += '</div>';
+  });
+  if(!any) h += '<div style="font-size:14px;color:#667085">No swaps added yet.</div>';
+  if(state.note && state.note.trim()){
+    h += '<div style="font-size:14px;border-left:3px solid #dfe4ec;padding:4px 0 4px 12px;white-space:pre-wrap"><b>Note:</b> '+esc(state.note.trim())+'</div>';
+  }
+  h += '<p style="font-size:15px;margin:16px 0 14px">'+esc(ep.closing)+'</p>'+
+       '<p style="font-size:15px;margin:0">'+esc(ep.signoff)+(ep.sender ? '<br><b>'+esc(ep.sender)+'</b>' : '')+'</p>';
+  h += '</div>';
+  document.getElementById('preview').innerHTML = h;
+}
+
+/* ---------- export ---------- */
+function downloadHtml(){
+  var doc = '<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">'+
+    '<meta name="viewport" content="width=device-width, initial-scale=1"><title>Shift Swap Request</title></head>'+
+    '<body style="margin:0;padding:20px 14px;background:#ffffff">'+document.getElementById('preview').innerHTML+'</body></html>';
+  saveFile('shift-swap-request-'+todayIso()+'.html', doc, 'text/html');
+}
+
+/* Saving: uses the artifact viewer's download service when present, a normal browser download otherwise */
+var dl = null;
+try{ if(window.claude && window.claude.use) window.claude.use('downloads').then(function(d){ dl = d; }, function(){}); }catch(e){}
+function saveFile(filename, text, mime){
+  if(dl){
+    dl.save({filename:filename, data:text})
+      .catch(function(){ return dl.save({filename:filename, data:new Blob([text],{type:mime})}); })
+      .then(function(){ toast('Saved '+filename); }, function(){ toast('Save was cancelled or blocked'); });
+    return;
+  }
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([mime==='application/pdf' ? pdfBytes(text) : text],{type:mime}));
+  a.download = filename;
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(function(){ URL.revokeObjectURL(a.href); }, 4000);
+  toast('Downloaded '+filename);
+}
+
+/* ---------- PDF (built directly, no print dialog needed) ---------- */
+function pdfStr(s){ return String(s==null?'':s).replace(/[^\x20-\x7E]/g,'?').replace(/([\\()])/g,'\\$1'); }
+function buildPdf(){
+  var INK='0.11 0.14 0.19', MUTED='0.40 0.44 0.52';
+  var pages=[], cur=[], y=800;
+  function newPage(){ pages.push(cur.join('\n')); cur=[]; y=800; }
+  function need(h){ if(y-h<50) newPage(); }
+  function text(x,yy,size,bold,s,rgb){
+    cur.push('BT /'+(bold?'F2':'F1')+' '+size+' Tf '+(rgb||INK)+' rg '+x+' '+yy+' Td ('+pdfStr(s)+') Tj ET'); }
+  function rect(x,yy,w,h,rgb){ cur.push(rgb+' rg '+x+' '+yy+' '+w+' '+h+' re f'); }
+  function line(yy){ cur.push('0.87 0.89 0.93 RG 0.5 w 50 '+yy+' m 545 '+yy+' l S'); }
+
+  text(50,y,20,true,'Shift Swap Request'); y-=18;
+  text(50,y,10,false,'Prepared '+fmtDate(todayIso())+'   |   Ref '+state.ref,MUTED); y-=8;
+  rect(50,y,495,2,'0.04 0.36 0.68'); y-=38;
+  function para(str,size,bold){
+    String(str).split(/\r?\n/).forEach(function(par){
+      var ln='';
+      par.split(' ').forEach(function(w){
+        if((ln+' '+w).length>92){ need(15); text(50,y,size,bold,ln); y-=14; ln=w; }
+        else ln = ln ? ln+' '+w : w;
+      });
+      need(15); text(50,y,size,bold,ln); y-=14;
+    });
+  }
+  var ep = emailParts();
+  para(ep.greeting,11,false); y-=4;
+  para(ep.intro,11,false); y-=30;
+
+  if(!state.swaps.length){ text(50,y,11,false,'No swaps added yet.',MUTED); y-=20; }
+  state.swaps.forEach(function(s){
+    var A=s.a||'-', B=s.b||'-', rows=[];
+    s.aCovers.forEach(function(r){ if(r.date) rows.push({date:r.date,shift:r.shift,on:A,off:B}); });
+    s.bCovers.forEach(function(r){ if(r.date) rows.push({date:r.date,shift:r.shift,on:B,off:A}); });
+    rows.sort(function(p,q){ return p.date<q.date?-1:p.date>q.date?1:0; });
+    need(70);
+    rect(50,y-7,495,24,'0.93 0.96 0.98');
+    text(58,y,13,true,A+'  <->  '+B); y-=26;
+    if(!rows.length){ text(58,y,10,false,'No days added yet.',MUTED); y-=24; return; }
+    text(58,y,8,true,'DATE',MUTED); text(200,y,8,true,'SHIFT',MUTED);
+    text(290,y,8,true,'ON DUTY',MUTED); text(420,y,8,true,'COVERING FOR',MUTED);
+    y-=6; line(y); y-=15;
+    rows.forEach(function(r){
+      need(24);
+      text(58,y,11,false,fmtDate(r.date)); text(200,y,11,true,r.shift||'-');
+      text(290,y,11,true,r.on); text(420,y,11,false,r.off);
+      y-=7; line(y); y-=15;
+    });
+    y-=12;
+  });
+  if(state.note && state.note.trim()){
+    need(40); text(50,y,11,true,'Note'); y-=15;
+    para(state.note.trim(),10,false); y-=6;
+  }
+  y-=4; need(70);
+  para(ep.closing,11,false); y-=10;
+  para(ep.signoff,11,false);
+  if(ep.sender) para(ep.sender,11,true);
+  pages.push(cur.join('\n'));
+
+  var objs=[], kids=[];
+  objs[1]='<< /Type /Catalog /Pages 2 0 R >>';
+  objs[3]='<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>';
+  objs[4]='<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold /Encoding /WinAnsiEncoding >>';
+  pages.forEach(function(c,i){
+    var p=5+2*i; kids.push(p+' 0 R');
+    objs[p]='<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents '+(p+1)+' 0 R >>';
+    objs[p+1]='<< /Length '+c.length+' >>\nstream\n'+c+'\nendstream';
+  });
+  objs[2]='<< /Type /Pages /Kids ['+kids.join(' ')+'] /Count '+pages.length+' >>';
+  var out='%PDF-1.4\n', offs=[];
+  for(var n=1;n<objs.length;n++){ offs[n]=out.length; out+=n+' 0 obj\n'+objs[n]+'\nendobj\n'; }
+  var xref=out.length;
+  out+='xref\n0 '+objs.length+'\n0000000000 65535 f \n';
+  for(n=1;n<objs.length;n++) out+=('0000000000'+offs[n]).slice(-10)+' 00000 n \n';
+  out+='trailer\n<< /Size '+objs.length+' /Root 1 0 R >>\nstartxref\n'+xref+'\n%%EOF\n';
+  return out;
+}
+function pdfBytes(str){ var b = new Uint8Array(str.length); for(var i=0;i<str.length;i++) b[i] = str.charCodeAt(i) & 255; return b; }
+function isPhone(){ return /iPhone|iPad|iPod|Android/i.test(navigator.userAgent||'') || (navigator.maxTouchPoints>1 && /Macintosh/.test(navigator.userAgent||'')); }
+function downloadPdf(){
+  var name = 'shift-swap-request-'+todayIso()+'.pdf', pdf = buildPdf();
+  /* On phones, open the share sheet: Save to Files, WhatsApp, Mail ... */
+  if(!dl && isPhone() && navigator.canShare && window.File){
+    try{
+      var file = new File([pdfBytes(pdf)], name, {type:'application/pdf'});
+      if(navigator.canShare({files:[file]})){
+        navigator.share({files:[file], title:'Shift Swap Request'}).then(function(){}, function(e){
+          if(!e || e.name!=='AbortError') saveFile(name, pdf, 'application/pdf');
+        });
+        return;
+      }
+    }catch(e){}
+  }
+  saveFile(name, pdf, 'application/pdf');
+}
+function copyEmail(){
+  var el = document.getElementById('preview');
+  function fallback(){
+    var r = document.createRange(); r.selectNodeContents(el);
+    var sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(r);
+    var ok = false; try{ ok = document.execCommand('copy'); }catch(e){}
+    sel.removeAllRanges();
+    toast(ok ? 'Copied — paste into your email' : 'Copy failed — select the preview and copy manually');
+  }
+  try{
+    if(navigator.clipboard && window.ClipboardItem){
+      navigator.clipboard.write([new ClipboardItem({
+        'text/html': new Blob([el.innerHTML],{type:'text/html'}),
+        'text/plain': new Blob([el.innerText],{type:'text/plain'})
+      })]).then(function(){ toast('Copied — paste into your email'); }, fallback);
+    } else fallback();
+  }catch(e){ fallback(); }
+}
+function clearAll(){
+  if(!state.swaps.length && !state.note) return;
+  state.swaps = []; state.note = ''; state.ref = newRef(); save(); renderAll();
+  toast('Cleared — names and shifts kept');
+}
+
+/* ---------- admin: build the locked staff file ---------- */
+function exportEmployee(){
+  if(MODE!=='admin') return;
+  if(!state.names.length || !state.shifts.length){ toast('Add names and shifts first'); return; }
+  var cfg = JSON.stringify({names:state.names, shifts:state.shifts, manager:(state.manager||'').trim(),
+                            emails:state.emails||{}, cc:state.cc||''})
+              .replace(/</g,'\\u003c');
+  var js = document.getElementById('app').textContent;
+  var marker = "var MODE = 'adm" + "in', LOCKED = null;";
+  if(js.indexOf(marker)===-1){ toast('Could not build the staff file'); return; }
+  js = js.replace(marker, "var MODE = 'employee', LOCKED = " + cfg + ";");
+  var body = document.body.cloneNode(true);
+  Array.prototype.forEach.call(body.querySelectorAll('script,.admin-only'), function(n){ n.remove(); });
+  ['swaps','preview','subject'].forEach(function(id){ var n = body.querySelector('#'+id); if(n) n.innerHTML=''; });
+  var t = body.querySelector('#toast'); if(t){ t.className=''; t.textContent=''; }
+  var html = '<!DOCTYPE html>\n<html lang="en">\n<head>\n<meta charset="utf-8">\n'+
+    '<meta name="viewport" content="width=device-width, initial-scale=1">\n<title>Shift Swap Request</title>\n'+
+    '<style id="appstyle">'+document.getElementById('appstyle').textContent+'</style>\n</head>\n<body>\n'+
+    body.innerHTML+'\n<script id="app">'+js+'</scr'+'ipt>\n</body>\n</html>\n';
+  saveFile('shift-swap-request-staff.html', html, 'text/html');
+}
+
+/* ---------- email: admin list + one-tap send ---------- */
+function validEmail(e){ return /^[^\s@,;]+@[^\s@,;]+\.[^\s@,;]+$/.test(e); }
+function renderEmails(){
+  var box = document.getElementById('emailList'); if(!box) return;
+  var keys = Object.keys(state.emails||{}).sort();
+  box.innerHTML = keys.length ? keys.map(function(k){
+    return '<span class="chip" style="margin:0 6px 6px 0">'+esc(k)+' &mdash; '+esc(state.emails[k])+
+      '<button aria-label="Delete email for '+esc(k)+'" onclick="deleteEmail(\''+encodeURIComponent(k)+'\')">×</button></span>';
+  }).join('') : '<span class="empty">No emails saved yet.</span>';
+  var sel = document.getElementById('emailName');
+  sel.innerHTML = options(state.names.filter(function(n){ return !isLeave(n); }), state.manager, 'Select name');
+  document.getElementById('ccAddr').value = state.cc || '';
+}
+function saveEmail(){
+  var n = document.getElementById('emailName').value, e = document.getElementById('emailAddr').value.trim();
+  if(!n){ toast('Pick a name first'); return; }
+  if(!validEmail(e)){ toast('That email address doesn\'t look right'); return; }
+  state.emails[n] = e; document.getElementById('emailAddr').value = ''; save(); renderEmails(); toast('Saved email for '+n);
+}
+function deleteEmail(k){ delete state.emails[decodeURIComponent(k)]; save(); renderEmails(); }
+function saveCc(){
+  var v = document.getElementById('ccAddr').value.trim();
+  var bad = v.split(/[,;]\s*/).filter(function(x){ return x && !validEmail(x); });
+  if(bad.length){ toast('Check the CC address'); return; }
+  state.cc = v.replace(/;\s*/g,','); save(); toast(v ? 'CC saved' : 'CC removed');
+}
+function plainBody(){
+  var ep = emailParts(), L = [], NL = '\r\n';
+  L.push(ep.greeting, '', ep.intro, '');
+  state.swaps.forEach(function(s){
+    var A = s.a || '-', B = s.b || '-', rows = [];
+    s.aCovers.forEach(function(r){ if(r.date) rows.push({date:r.date,shift:r.shift,on:A,off:B}); });
+    s.bCovers.forEach(function(r){ if(r.date) rows.push({date:r.date,shift:r.shift,on:B,off:A}); });
+    rows.sort(function(x,y){ return x.date<y.date?-1:x.date>y.date?1:0; });
+    L.push(A+'  <->  '+B, '------------------------------');
+    if(!rows.length) L.push('(no days added)');
+    rows.forEach(function(r){ L.push('- '+fmtDate(r.date)+'  |  '+(r.shift||'-')+'  |  '+r.on+' covers '+r.off); });
+    L.push('');
+  });
+  if(state.note && state.note.trim()) L.push('Note: '+state.note.trim(), '');
+  L.push(ep.closing, '', ep.signoff);
+  if(ep.sender) L.push(ep.sender);
+  L.push('', 'Ref: '+state.ref);
+  return L.join(NL);
+}
+function sendEmail(){
+  var hasDays = state.swaps.some(function(s){ return s.aCovers.concat(s.bCovers).some(function(r){ return r.date; }); });
+  if(!hasDays){ toast('Add at least one day first'); return; }
+  document.getElementById('sendBox').style.display = 'flex';
+}
+function closeSend(){ document.getElementById('sendBox').style.display = 'none'; }
+function sendVia(kind){
+  closeSend();
+  var to = (state.emails||{})[state.manager] || '', cc = state.cc || '';
+  var subj = emailParts().subject, body = plainBody(), E = encodeURIComponent, url;
+  if(kind==='outlook'){
+    url = 'https://outlook.office.com/mail/deeplink/compose?to='+E(to)+(cc?'&cc='+E(cc):'')+'&subject='+E(subj)+'&body='+E(body);
+  } else if(kind==='gmail'){
+    url = 'https://mail.google.com/mail/?view=cm&fs=1&to='+E(to)+(cc?'&cc='+E(cc):'')+'&su='+E(subj)+'&body='+E(body);
+  } else {
+    url = 'mailto:'+E(to).replace(/%40/g,'@')+'?'+(cc?'cc='+E(cc)+'&':'')+'subject='+E(subj)+'&body='+E(body);
+  }
+  if(!to) toast('No email saved for '+(state.manager||'the manager')+' — add the address before sending');
+  var a = document.createElement('a'); a.href = url; a.rel = 'noopener';
+  a.target = kind==='app' ? '_top' : '_blank';
+  document.body.appendChild(a); a.click(); a.remove();
+}
+
+function renderPeople(){
+  var staff = state.names.filter(function(n){ return !isLeave(n); });
+  var m = document.getElementById('manager'), sd = document.getElementById('sender');
+  if(state.manager && staff.indexOf(state.manager)===-1) state.manager = defaultManager(staff);
+  if(state.sender && staff.indexOf(state.sender)===-1) state.sender = '';
+  m.innerHTML = options(staff, state.manager, 'Select manager');
+  sd.innerHTML = options(staff, state.sender, 'Select your name');
+}
+function renderAll(){
+  renderChips(); renderSwaps();
+  document.getElementById('note').value = state.note || '';
+  renderPeople(); renderEmails();
+  renderPreview();
+}
+if(MODE!=='admin'){
+  Array.prototype.forEach.call(document.querySelectorAll('.admin-only'), function(n){ n.remove(); });
+}
+renderAll();
+</script>
+</body>
+</html>
